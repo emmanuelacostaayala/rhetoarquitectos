@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import './globals.css';
 
 export default function Home() {
@@ -89,6 +90,9 @@ export default function Home() {
           <div className="projects-grid animate-fade-in-up delay-200" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))' }}>
             {/* 1. Master Plan */}
             <div className="project-card">
+              <div style={{ width: '100%', height: '140px', position: 'relative', overflow: 'hidden', borderRadius: '4px', marginBottom: '1.5rem', backgroundColor: '#f5f5f5' }}>
+                <Image src="/larimarrheto.jpeg" alt="Larimar City & Resort" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
+              </div>
               <div className="badge-award">🌍 Urbanismo & Master Plan</div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Larimar City & Resort (Punta Cana)</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
@@ -99,6 +103,9 @@ export default function Home() {
 
             {/* 2. Edificios Autor - Bolivia */}
             <div className="project-card delay-100">
+              <div style={{ width: '100%', height: '140px', position: 'relative', overflow: 'hidden', borderRadius: '4px', marginBottom: '1.5rem', backgroundColor: '#f5f5f5' }}>
+                <Image src="/Torre-Omnia-Lux.jpeg" alt="Torre Omnia Lux" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
+              </div>
               <div className="badge-award">🏆 Premio Nacional de Arquitectura</div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Torre Omnia Lux (Bolivia)</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
@@ -108,6 +115,9 @@ export default function Home() {
             </div>
 
             <div className="project-card delay-200">
+              <div style={{ width: '100%', height: '140px', position: 'relative', overflow: 'hidden', borderRadius: '4px', marginBottom: '1.5rem', backgroundColor: '#f5f5f5' }}>
+                <Image src="/Torre-Riviera.jpeg" alt="Torre Riviera" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
+              </div>
               <div className="badge-award">🏢 Uso Mixto</div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Torre Riviera (Bolivia)</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
