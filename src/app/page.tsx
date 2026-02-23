@@ -74,7 +74,7 @@ export default function Home() {
       </section>
 
       {/* Projects Impact Section */}
-      <section className="section-padding" style={{ backgroundColor: 'var(--background)' }}>
+      <section id="legado" className="section-padding" style={{ backgroundColor: 'var(--background)' }}>
         <div className="container">
           <div className="text-center animate-fade-in-up" style={{ maxWidth: '800px', margin: '0 auto 4rem' }}>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Un Legado en Expansión</h2>
@@ -94,19 +94,53 @@ export default function Home() {
             </div>
 
             <div className="project-card delay-100">
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>CLERHP Estructuras</h3>
+              <div className="badge-award">🏆 Premio Nacional de Arquitectura</div>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Edificio Omnia Lux (Bolivia)</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-                La evolución natural de nuestra práctica profesional. Una multinacional que cotiza en bolsa y lidera el sector del diseño y cálculo de estructuras a nivel internacional.
+                Galardonado en 2014, este proyecto en Santa Cruz de la Sierra consolidó la presencia internacional y la excelencia técnica de CLERHP Estructuras en Latinoamérica.
               </p>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Ingeniería & Construcción</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Hito Internacional</span>
             </div>
 
             <div className="project-card delay-200">
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Innovación Constante</h3>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>CLERHP Estructuras</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-                Desde Rheto hasta ecosistemas como Inbentus, la visión de Juan Andrés Romero sigue impulsando la tecnología, el emprendimiento y la transformación social a través del diseño.
+                La evolución natural de nuestra práctica profesional. Una multinacional que cotiza en bolsa (BME Growth) y lidera el sector del cálculo de estructuras.
               </p>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Emprendimiento Tech</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Ingeniería & Construcción</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contacto" className="section-padding">
+        <div className="container">
+          <div className="grid-2">
+            <div className="animate-fade-in-up">
+              <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Contacta con Nosotros</h2>
+              <div className="divider" style={{ margin: '1rem 0 2rem' }}></div>
+              <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '2rem', maxWidth: '400px' }}>
+                ¿Tienes un proyecto en mente o deseas conocer más sobre nuestra trayectoria y visión de ingeniería social? Escríbenos.
+              </p>
+            </div>
+
+            <div className="glass-card animate-fade-in-up delay-100">
+              <form onSubmit={(e) => e.preventDefault()}>
+                <div className="form-group">
+                  <label htmlFor="name" className="form-label">Nombre Completo</label>
+                  <input type="text" id="name" className="form-input" placeholder="Ej. Arquitecto García" required />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email" className="form-label">Correo Electrónico</label>
+                  <input type="email" id="email" className="form-input" placeholder="tu@email.com" required />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="message" className="form-label">Mensaje</label>
+                  <textarea id="message" className="form-textarea" placeholder="¿En qué podemos ayudarte?" required></textarea>
+                </div>
+                <button type="submit" className="btn-submit">Enviar Mensaje</button>
+              </form>
             </div>
           </div>
         </div>

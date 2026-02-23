@@ -10,7 +10,7 @@ export default function Navbar() {
                 <div className="navbar-links">
                     <Link href="#historia" className="nav-link">Cimientos</Link>
                     <Link href="#legado" className="nav-link">Legado</Link>
-                    <a href="#" className="btn-secondary">Contacto</a>
+                    <Link href="#contacto" className="btn-secondary">Contacto</Link>
                 </div>
             </div>
         </nav>
