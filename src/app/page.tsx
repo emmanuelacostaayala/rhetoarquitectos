@@ -33,11 +33,8 @@ export default function Home() {
         <div className="container">
           <div className="grid-2 section-card animate-fade-in-up">
             <div style={{ position: 'relative', height: '100%', minHeight: '400px', backgroundColor: '#e0e0e0', borderRadius: '4px', overflow: 'hidden' }} className="founder-img-wrapper">
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(45deg, var(--accent-dark), var(--accent-light))', opacity: 0.1 }}></div>
-              {/* Optional Placeholder for Architecture/Office Image */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-secondary)', fontSize: '0.9rem', letterSpacing: '0.1em' }}>
-                [ ESPACIO ARQUITECTÓNICO ]
-              </div>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(45deg, var(--accent-dark), var(--accent-light))', opacity: 0.1, zIndex: 1 }}></div>
+              <Image src="/cimientos.jpg" alt="Cimientos de Rheto" fill style={{ objectFit: 'cover' }} sizes="(max-width: 900px) 100vw, 50vw" />
             </div>
 
             <div className="glass-card">
@@ -91,7 +88,7 @@ export default function Home() {
             {/* 1. Master Plan */}
             <div className="project-card">
               <div style={{ width: '100%', height: '140px', position: 'relative', overflow: 'hidden', borderRadius: '4px', marginBottom: '1.5rem', backgroundColor: '#f5f5f5' }}>
-                <Image src="/larimarrheto.jpeg" alt="Larimar City & Resort" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
+                <Image src="/larimar.jpg" alt="Larimar City & Resort" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
               </div>
               <div className="badge-award">🌍 Urbanismo & Master Plan</div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Larimar City & Resort (Punta Cana)</h3>
@@ -104,7 +101,7 @@ export default function Home() {
             {/* 2. Edificios Autor - Bolivia */}
             <div className="project-card delay-100">
               <div style={{ width: '100%', height: '140px', position: 'relative', overflow: 'hidden', borderRadius: '4px', marginBottom: '1.5rem', backgroundColor: '#f5f5f5' }}>
-                <Image src="/Torre-Omnia-Lux.jpeg" alt="Torre Omnia Lux" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
+                <Image src="/torre-omnia-lux.jpg" alt="Torre Omnia Lux" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
               </div>
               <div className="badge-award">🏆 Premio Nacional de Arquitectura</div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Torre Omnia Lux (Bolivia)</h3>
@@ -116,7 +113,7 @@ export default function Home() {
 
             <div className="project-card delay-200">
               <div style={{ width: '100%', height: '140px', position: 'relative', overflow: 'hidden', borderRadius: '4px', marginBottom: '1.5rem', backgroundColor: '#f5f5f5' }}>
-                <Image src="/Torre-Riviera.jpeg" alt="Torre Riviera" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
+                <Image src="/torre-riviera.jpg" alt="Torre Riviera" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
               </div>
               <div className="badge-award">🏢 Uso Mixto</div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Torre Riviera (Bolivia)</h3>
