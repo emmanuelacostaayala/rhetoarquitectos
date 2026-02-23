@@ -86,30 +86,62 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="projects-grid animate-fade-in-up delay-200">
+          <div className="projects-grid animate-fade-in-up delay-200" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))' }}>
+            {/* 1. Master Plan */}
             <div className="project-card">
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Larimar City & Resort</h3>
+              <div className="badge-award">🌍 Urbanismo & Master Plan</div>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Larimar City & Resort (Punta Cana)</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-                Un megaproyecto en República Dominicana que refleja nuestra visión de crear ciudades sostenibles e integradas, liderado por Clerhp con el ADN de Rheto en su concepción.
+                Rheto Arquitectos es la firma responsable del Master Plan. Más que un complejo, es el diseño integral de una ciudad desde cero, incluyendo vías, parques, lagos y zonificación, bajo la dirección arquitectónica personal de Juan Andrés Romero.
               </p>
               <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Desarrollo Inmobiliario</span>
             </div>
 
+            {/* 2. Edificios Autor - Bolivia */}
             <div className="project-card delay-100">
               <div className="badge-award">🏆 Premio Nacional de Arquitectura</div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Edificio Omnia Lux (Bolivia)</h3>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Torre Omnia Lux (Bolivia)</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-                Galardonado en 2014, este proyecto en Santa Cruz de la Sierra consolidó la presencia internacional y la excelencia técnica de CLERHP Estructuras en Latinoamérica.
+                Un referente fundamental en nuestro portafolio. Este edificio residencial de lujo en Santa Cruz destaca por sus icónicos balcones curvos y su excelencia técnica, siendo un diseño 100% de nuestro equipo.
               </p>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Hito Internacional</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Edificios de Autor</span>
             </div>
 
             <div className="project-card delay-200">
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>CLERHP Estructuras</h3>
+              <div className="badge-award">🏢 Uso Mixto</div>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Torre Riviera (Bolivia)</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-                La evolución natural de nuestra práctica profesional. Una multinacional que cotiza en bolsa (BME Growth) y lidera el sector del cálculo de estructuras.
+                Reconocida por su imponente altura y fachada verdaderamente moderna, esta torre combina espacios comerciales y residenciales, consolidando el impacto del estudio en Santa Cruz.
               </p>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Ingeniería & Construcción</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Edificios de Autor</span>
+            </div>
+
+            <div className="project-card delay-300">
+              <div className="badge-award">🌿 Integración Natural</div>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Edificio Jardines de Isuto (Bolivia)</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
+                Un proyecto residencial innovador que fusiona magistralmente la naturaleza con la arquitectura. Este concepto de integración es la semilla que hoy estamos escalando en Larimar.
+              </p>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Edificios de Autor</span>
+            </div>
+
+            {/* 3. España */}
+            <div className="project-card delay-400">
+              <div className="badge-award">🏡 Raíces en Murcia</div>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Villas de Lujo (Mazarrón, España)</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
+                Nuestro origen y cimientos en la Costa Cálida. Hemos diseñado múltiples viviendas unifamiliares de alto standing, caracterizadas por un estilo minimalista blanco y amplios ventanales.
+              </p>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Residencial Exclusivo</span>
+            </div>
+
+            <div className="project-card delay-500">
+              <div className="badge-award">🌊 Arquitectura Costera</div>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Residencial El Alcolar (España)</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
+                Complejos de apartamentos ubicados junto al mar en la región de Murcia. Estos proyectos se distinguen por un diseño enfocado hacia el paisaje marino y una alta eficiencia en el uso de materiales.
+              </p>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Residencial</span>
             </div>
           </div>
         </div>
