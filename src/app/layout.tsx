@@ -16,6 +16,9 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Rheto Arquitectos | Ingeniería Social del Futuro",
   description: "El crisol donde se forjó la filosofía de grandes megaproyectos. Fundado por Juan Andrés Romero.",
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({
@@ -24,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="scroll-smooth">
+    <html lang="es" className="scroll-smooth" data-theme="dark">
       <body className={`${inter.variable} ${montserrat.variable} antialiased`}>
         <Navbar />
         {children}

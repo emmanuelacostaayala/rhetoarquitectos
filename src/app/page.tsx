@@ -1,206 +1,290 @@
 "use client";
 
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import './globals.css';
 
-export default function Home() {
+const TIMELINE_PROJECTS = [
+  { title: 'Larimar City & Resort', year: '2018 →', location: 'Punta Cana, RD', src: '/larimar.jpg' },
+  { title: 'Torre Omnia Lux', year: '2014', location: 'Santa Cruz, Bolivia', src: '/torre-omnia-lux.jpg' },
+  { title: 'Torre Riviera', year: '2012', location: 'Santa Cruz, Bolivia', src: '/torre-riviera.jpg' },
+  { title: 'Edificio Jardines de Isuto', year: '2010', location: 'Bolivia', src: '/cimientos.jpg' },
+  { title: 'Villas de Lujo (Mazarrón)', year: '2008', location: 'Murcia, España', src: '/larimar.jpg' },
+  { title: 'Residencial El Alcolar', year: '2006', location: 'Murcia, España', src: '/torre-riviera.jpg' },
+];
+
+function TimelineProjectRow({ project }: { project: typeof TIMELINE_PROJECTS[0] }) {
+  const [hovered, setHovered] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
   return (
-    <main>
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-bg"></div>
-        <div className="container hero-content">
-          <div className="animate-fade-in-up">
-            <div className="project-pill mb-4">Arquitectura & Ingeniería Social</div>
-            <div className="mb-4">
-              <h1 className="rheto-logo">
-                RHETO<span>ARQUITECTOS</span>
-              </h1>
+    <div
+      className="timeline-item draw-border-b"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.closest('.timeline-section')!.getBoundingClientRect();
+        setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+      }}
+    >
+      <span className="timeline-year tech-text">{project.year}</span>
+      <span className="timeline-title">{project.title}</span>
+      <span className="timeline-location tech-text">{project.location}</span>
+
+      {hovered && (
+        <div
+          className="timeline-floating-img"
+          style={{ left: mousePos.x + 24, top: mousePos.y - 80 }}
+        >
+          <Image src={project.src} alt={project.title} fill sizes="300px" />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function Home() {
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [splitOffset, setSplitOffset] = useState({ x: 0, y: 0 });
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const handleMouse = (e: MouseEvent) => {
+      setCoords({ x: e.clientX, y: e.clientY });
+
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+
+      const normX = (e.clientX - centerX) / centerX;
+      const normY = (e.clientY - centerY) / centerY;
+
+      setSplitOffset({ x: normX * 40, y: normY * 10 });
+    };
+    window.addEventListener('mousemove', handleMouse);
+    return () => window.removeEventListener('mousemove', handleMouse);
+  }, []);
+
+  return (
+    <main style={{ position: 'relative' }}>
+
+      {/* Theme Toggle Button */}
+      <button
+        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        style={{
+          position: 'fixed',
+          top: 20,
+          right: 20,
+          zIndex: 9999,
+          background: 'var(--text-primary)',
+          color: 'var(--bg-primary)',
+          border: 'none',
+          padding: '8px 16px',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.75rem',
+          cursor: 'pointer',
+          textTransform: 'uppercase'
+        }}
+        className="tech-text"
+      >
+        [ THEME: {theme} ]
+      </button>
+
+      {/* Floating Blueprint Coordinates */}
+      <div style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 9999, pointerEvents: 'none' }} className="tech-text">
+        [ X: {coords.x.toString().padStart(4, '0')} Y: {coords.y.toString().padStart(4, '0')} ]
+      </div>
+
+      {/* Marquee Slogan */}
+      <div className="marquee-container">
+        <div className="marquee-content">
+          INGENIERÍA SOCIAL DEL FUTURO +++ EST. 2006 +++ ARCHITECTURAL BLUEPRINT 01 +++ CREADORES DE LARIMAR CITY +++ DISEÑO ESTRUCTURAL +++ INGENIERÍA SOCIAL DEL FUTURO +++ EST. 2006 +++ ARCHITECTURAL BLUEPRINT 01 +++ CREADORES DE LARIMAR CITY +++ DISEÑO ESTRUCTURAL
+        </div>
+      </div>
+
+      {/* Top Nav */}
+      <nav className="top-nav draw-border-b">
+        <div className="tech-text">BUILT FOR DESIGNERS <br />&amp; VISUAL THINKERS</div>
+        <div className="top-nav-items tech-text" style={{ textAlign: 'right' }}>
+          <div>SEC. 001 <br /> RHETO</div>
+          <div>REV. A <br /> EST. 2006</div>
+          <div>LOC. <br /> MADRID / STA CRUZ / P.CANA</div>
+        </div>
+      </nav>
+
+      {/* Mega Hero */}
+      <section
+        className="hero-mega draw-border-b"
+        style={{
+          position: 'relative',
+          '--split-x': `${splitOffset.x}px`,
+          '--split-y': `${splitOffset.y}px`
+        } as React.CSSProperties}
+      >
+        <div style={{ position: 'absolute', top: 20, right: 20 }} className="tech-text">[ DWG-01 ]</div>
+        <div style={{ position: 'absolute', bottom: 20, left: 20 }} className="tech-text">[ SCALE: 1:100 ]</div>
+
+        <p className="hero-mega-sub tech-text" style={{ maxWidth: '400px', lineHeight: 1.6 }}>
+          ESTUDIO TÉCNICO // La arquitectura no es solo el diseño de espacios; es la ingeniería social del futuro. El crisol donde se forjó la filosofía de los megaproyectos.
+        </p>
+        <h1 className="hero-mega-text" style={{ marginTop: '2rem' }}>
+          <span className="split-text" data-text="RHETO">RHETO</span>
+          <span className="split-text" data-text="ARQTS">ARQTS</span>
+        </h1>
+      </section>
+
+      {/* Split Section: Clients List + Image Grid */}
+      <section className="split-section draw-border-b">
+        <div className="split-left draw-border-r">
+          <div className="split-left-content">
+            <h2 className="tech-text pb-4 mb-4 draw-border-b">Selected Projects &amp; Legacy</h2>
+            <div className="client-list">
+              <p>Larimar City &amp; Resort</p>
+              <p>Torre Omnia Lux</p>
+              <p>Torre Riviera</p>
+              <p>Edificio Jardines de Isuto</p>
+              <p>Villas de Lujo (Mazarrón)</p>
+              <p>Residencial El Alcolar</p>
             </div>
-            <p style={{ maxWidth: '600px', fontSize: '1.2rem', lineHeight: '1.6', color: 'var(--text-secondary)' }} className="delay-200 animate-fade-in-up">
-              El crisol donde se forjó la filosofía de los megaproyectos del futuro. Más que diseño de espacios, somos la base del desarrollo urbano y humano.
-            </p>
-            <div className="divider delay-300 animate-fade-in-left"></div>
-            <a href="#historia" className="btn-primary delay-400 animate-fade-in-up" style={{ marginTop: '2rem' }}>
-              Descubrir Nuestra Esencia
-            </a>
+            <div className="mt-12 text-sm text-muted">
+              <p className="mb-4">Antes de consolidar el liderazgo internacional de CLERHP Estructuras en 2011, los cimientos nacieron en Rheto Arquitectos.</p>
+              <p>Fundado por Juan Andrés Romero, este estudio es el entorno creativo donde se forjó la filosofía que hoy rige proyectos a escala global.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="split-right">
+          <div className="image-cell draw-border-b draw-border-r">
+            <div style={{ position: 'absolute', top: 8, left: 8, zIndex: 10 }} className="tech-text">[ FIG. 1A ]</div>
+            <Image className="zoom-img keep-color" src="/larimar.jpg" alt="Larimar City &amp; Resort" fill sizes="(max-width: 768px) 100vw, 50vw" />
+            <div className="image-caption">Larimar City &amp; Resort (Punta Cana)</div>
+          </div>
+          <div className="image-cell draw-border-b">
+            <div style={{ position: 'absolute', top: 8, left: 8, zIndex: 10 }} className="tech-text">[ FIG. 1B ]</div>
+            <Image className="zoom-img" src="/torre-omnia-lux.jpg" alt="Torre Omnia Lux" fill sizes="(max-width: 768px) 100vw, 50vw" />
+            <div className="image-caption">Torre Omnia Lux (Bolivia)</div>
+          </div>
+          <div className="image-cell draw-border-r">
+            <div style={{ position: 'absolute', top: 8, left: 8, zIndex: 10 }} className="tech-text">[ FIG. 2A ]</div>
+            <Image className="zoom-img" src="/torre-riviera.jpg" alt="Torre Riviera" fill sizes="(max-width: 768px) 100vw, 50vw" />
+            <div className="image-caption">Torre Riviera (Bolivia)</div>
+          </div>
+          <div className="image-cell">
+            <div style={{ position: 'absolute', top: 8, left: 8, zIndex: 10 }} className="tech-text">[ FIG. 2B ]</div>
+            <Image className="zoom-img" src="/cimientos.jpg" alt="Cimientos de Rheto" fill sizes="(max-width: 768px) 100vw, 50vw" />
+            <div className="image-caption">Nuestros Cimientos</div>
           </div>
         </div>
       </section>
 
-      {/* Origin Section */}
-      <section id="historia" className="section-padding" style={{ backgroundColor: 'var(--surface)' }}>
-        <div className="container">
-          <div className="grid-2 section-card animate-fade-in-up">
-            <div style={{ position: 'relative', height: '100%', minHeight: '400px', backgroundColor: '#e0e0e0', borderRadius: '4px', overflow: 'hidden' }} className="founder-img-wrapper">
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(45deg, var(--accent-dark), var(--accent-light))', opacity: 0.1, zIndex: 1 }}></div>
-              <Image src="/cimientos.jpg" alt="Cimientos de Rheto" fill style={{ objectFit: 'cover' }} sizes="(max-width: 900px) 100vw, 50vw" />
-            </div>
+      {/* Chronological Timeline */}
+      <section className="timeline-section draw-border-b">
+        <div className="projects-header tech-text draw-border-b">
+          <div>(CRONOLOGÍA TÉCNICA)</div>
+          <div className="top-nav-items">
+            <span>RHETO ARQTS</span>
+            <span>DATA-LOG 06-26</span>
+          </div>
+        </div>
+        {TIMELINE_PROJECTS.map((project) => (
+          <TimelineProjectRow key={project.title} project={project} />
+        ))}
+      </section>
 
-            <div className="glass-card">
-              <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: 600 }}>Nuestros Cimientos</h2>
-              <div className="divider" style={{ margin: '1rem 0 2rem' }}></div>
-              <div style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
-                <p style={{ marginBottom: '1.5rem' }}>
-                  Antes de consolidar el liderazgo internacional de <strong>CLERHP Estructuras</strong> en 2011, los cimientos de nuestra visión nacieron en <strong>Rheto Arquitectos</strong>.
-                </p>
-                <p style={{ marginBottom: '1.5rem' }}>
-                  Fundado alrededor de 2006 por <strong>Juan Andrés Romero</strong> tras sus estudios en la ETSAM, este estudio de arquitectura fue el entorno creativo y técnico donde se forjó la filosofía que hoy rige proyectos a escala global.
-                </p>
-                <p>
-                  Hoy en día, la esencia de Rheto Arquitectos sigue viva. Aporta el rigor de diseño, la sensibilidad espacial y la innovación técnica que respaldan estructural y operativamente a gigantes del desarrollo inmobiliario y urbano.
-                </p>
-              </div>
+      {/* Tablet-style Project Showcase */}
+      <section className="draw-border-b">
+        <div className="projects-header tech-text draw-border-b">
+          <div>(DETALLES DE OBRA)</div>
+          <div className="top-nav-items">
+            <span>RHETO ARQTS</span>
+            <span>+ EXPANDIR</span>
+          </div>
+        </div>
+
+        <div className="project-row draw-border-b">
+          <div className="project-image-large draw-border-r">
+            <div style={{ position: 'absolute', top: 16, right: 16, zIndex: 10 }} className="tech-text">[ ELEV. OMNIA ]</div>
+            <Image className="zoom-img" src="/torre-omnia-lux.jpg" alt="Omnia Lux" fill sizes="(max-width: 768px) 100vw, 50vw" />
+          </div>
+          <div className="project-details">
+            <h3 className="project-title">Torre Omnia Lux</h3>
+            <p className="project-desc">Un referente fundamental en nuestro portafolio. Este edificio residencial de lujo en Santa Cruz destaca por sus icónicos balcones curvos y su excelencia técnica.</p>
+            <div className="publication-list text-xs">
+              <div className="publication-item"><span>Premio Nacional</span><span>Arquitectura</span></div>
+              <div className="publication-item"><span>Domus</span><span>ArchDaily</span></div>
+              <div className="publication-item"><span>Diseño Conceptual</span><span>Estructura 100% Rheto</span></div>
             </div>
+          </div>
+        </div>
+
+        <div className="project-row">
+          <div className="project-details draw-border-r">
+            <h3 className="project-title">Torre Riviera</h3>
+            <p className="project-desc">Reconocida por su imponente altura y fachada verdaderamente moderna, combina espacios comerciales y residenciales, consolidando el impacto del estudio.</p>
+            <div className="publication-list text-xs">
+              <div className="publication-item"><span>Uso Mixto</span><span>Arquitectura Comercial</span></div>
+              <div className="publication-item"><span>Santa Cruz</span><span>Bolivia</span></div>
+            </div>
+          </div>
+          <div className="project-image-large">
+            <div style={{ position: 'absolute', top: 16, right: 16, zIndex: 10 }} className="tech-text">[ ELEV. RIVIERA ]</div>
+            <Image className="zoom-img" src="/torre-riviera.jpg" alt="Torre Riviera" fill sizes="(max-width: 768px) 100vw, 50vw" />
           </div>
         </div>
       </section>
 
-      {/* Vision & Quote Section */}
-      <section className="section-padding">
-        <div className="container">
-          <div className="quote-block animate-fade-in-up delay-100">
-            <div className="quote-icon">&ldquo;</div>
-            <p className="quote-text">
-              La arquitectura no es solo el diseño de espacios; es la ingeniería social del futuro. En Rheto aprendimos que para transformar ciudades, primero debemos entender el profundo impacto del diseño urbano en el desarrollo económico y la calidad de vida de sus comunidades.
-            </p>
-            <div style={{ marginTop: '2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <div style={{ width: '40px', height: '2px', backgroundColor: 'var(--accent-dark)' }}></div>
-              <strong style={{ fontSize: '1.1rem', letterSpacing: '0.05em' }}>Juan Andrés Romero</strong>
-              <span style={{ color: 'var(--text-secondary)' }}>— Fundador de Rheto Arquitectos & CEO de Clerhp</span>
+      {/* News Grid */}
+      <section className="news-section draw-border-b">
+        <div className="section-label tech-text">(REGISTRO DE NOTICIAS)</div>
+        <div className="news-grid">
+          <article className="news-item">
+            <div className="news-meta tech-text">/// 07 MAR 2026 // MASTER PLAN</div>
+            <h3 className="news-title">Larimar City &amp; Resort: Rethinking Urban Living in Punta Cana</h3>
+            <div className="news-image">
+              <Image className="zoom-img" src="/larimar.jpg" alt="Larimar City" fill sizes="(max-width: 768px) 100vw, 33vw" />
             </div>
-          </div>
+            <div className="draw-border-b mt-4"></div>
+          </article>
+          <article className="news-item">
+            <div className="news-meta tech-text">/// 24 FEB 2026 // PUBLICACIÓN</div>
+            <h3 className="news-title">Torre Riviera en Santa Cruz: Un hito de diseño moderno mixto</h3>
+            <div className="news-image">
+              <Image className="zoom-img" src="/torre-riviera.jpg" alt="Torre Riviera" fill sizes="(max-width: 768px) 100vw, 33vw" />
+            </div>
+            <div className="draw-border-b mt-4"></div>
+          </article>
+          <article className="news-item">
+            <div className="news-meta tech-text">/// 21 JAN 2026 // ENTREVISTA</div>
+            <h3 className="news-title">Juan Andrés Romero: La visión detrás de Rheto y CLERHP</h3>
+            <div className="news-image">
+              <Image className="zoom-img" src="/cimientos.jpg" alt="Cimientos de Rheto" fill sizes="(max-width: 768px) 100vw, 33vw" />
+            </div>
+            <div className="draw-border-b mt-4"></div>
+          </article>
         </div>
       </section>
 
-      {/* Projects Impact Section */}
-      <section id="legado" className="section-padding" style={{ backgroundColor: 'var(--background)' }}>
-        <div className="container">
-          <div className="text-center animate-fade-in-up" style={{ maxWidth: '800px', margin: '0 auto 4rem' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Un Legado en Expansión</h2>
-            <div className="divider" style={{ margin: '1rem auto 2rem' }}></div>
-            <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: '1.7' }}>
-              La metodología de trabajo nacida en Rheto Arquitectos ha escalado para dar vida a proyectos monumentales, fusionando la excelencia arquitectónica con la ingeniería de estructuras avanzada.
-            </p>
-          </div>
-
-          <div className="projects-grid animate-fade-in-up delay-200" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))' }}>
-            {/* 1. Master Plan */}
-            <div className="project-card">
-              <div style={{ width: '100%', height: '140px', position: 'relative', overflow: 'hidden', borderRadius: '4px', marginBottom: '1.5rem', backgroundColor: '#f5f5f5' }}>
-                <Image src="/larimar.jpg" alt="Larimar City & Resort" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
-              </div>
-              <div className="badge-award">🌍 Urbanismo & Master Plan</div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Larimar City & Resort (Punta Cana)</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-                Rheto Arquitectos es la firma responsable del Master Plan. Más que un complejo, es el diseño integral de una ciudad desde cero, incluyendo vías, parques, lagos y zonificación, bajo la dirección arquitectónica personal de Juan Andrés Romero.
-              </p>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Desarrollo Inmobiliario</span>
-            </div>
-
-            {/* 2. Edificios Autor - Bolivia */}
-            <div className="project-card delay-100">
-              <div style={{ width: '100%', height: '140px', position: 'relative', overflow: 'hidden', borderRadius: '4px', marginBottom: '1.5rem', backgroundColor: '#f5f5f5' }}>
-                <Image src="/torre-omnia-lux.jpg" alt="Torre Omnia Lux" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
-              </div>
-              <div className="badge-award">🏆 Premio Nacional de Arquitectura</div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Torre Omnia Lux (Bolivia)</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-                Un referente fundamental en nuestro portafolio. Este edificio residencial de lujo en Santa Cruz destaca por sus icónicos balcones curvos y su excelencia técnica, siendo un diseño 100% de nuestro equipo.
-              </p>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Edificios de Autor</span>
-            </div>
-
-            <div className="project-card delay-200">
-              <div style={{ width: '100%', height: '140px', position: 'relative', overflow: 'hidden', borderRadius: '4px', marginBottom: '1.5rem', backgroundColor: '#f5f5f5' }}>
-                <Image src="/torre-riviera.jpg" alt="Torre Riviera" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 320px" />
-              </div>
-              <div className="badge-award">🏢 Uso Mixto</div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Torre Riviera (Bolivia)</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-                Reconocida por su imponente altura y fachada verdaderamente moderna, esta torre combina espacios comerciales y residenciales, consolidando el impacto del estudio en Santa Cruz.
-              </p>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Edificios de Autor</span>
-            </div>
-
-            <div className="project-card delay-300">
-              <div className="badge-award">🌿 Integración Natural</div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Edificio Jardines de Isuto (Bolivia)</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-                Un proyecto residencial innovador que fusiona magistralmente la naturaleza con la arquitectura. Este concepto de integración es la semilla que hoy estamos escalando en Larimar.
-              </p>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Edificios de Autor</span>
-            </div>
-
-            {/* 3. España */}
-            <div className="project-card delay-400">
-              <div className="badge-award">🏡 Raíces en Murcia</div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Villas de Lujo (Mazarrón, España)</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-                Nuestro origen y cimientos en la Costa Cálida. Hemos diseñado múltiples viviendas unifamiliares de alto standing, caracterizadas por un estilo minimalista blanco y amplios ventanales.
-              </p>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Residencial Exclusivo</span>
-            </div>
-
-            <div className="project-card delay-500">
-              <div className="badge-award">🌊 Arquitectura Costera</div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--accent-dark)' }}>Residencial El Alcolar (España)</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>
-                Complejos de apartamentos ubicados junto al mar en la región de Murcia. Estos proyectos se distinguen por un diseño enfocado hacia el paisaje marino y una alta eficiencia en el uso de materiales.
-              </p>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--gold-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Residencial</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contacto" className="section-padding">
-        <div className="container">
-          <div className="grid-2">
-            <div className="animate-fade-in-up">
-              <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Contacta con Nosotros</h2>
-              <div className="divider" style={{ margin: '1rem 0 2rem' }}></div>
-              <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '2rem', maxWidth: '400px' }}>
-                ¿Tienes un proyecto en mente o deseas conocer más sobre nuestra trayectoria y visión de ingeniería social? Escríbenos.
-              </p>
-            </div>
-
-            <div className="glass-card animate-fade-in-up delay-100">
-              <form onSubmit={(e) => e.preventDefault()}>
-                <div className="form-group">
-                  <label htmlFor="name" className="form-label">Nombre Completo</label>
-                  <input type="text" id="name" className="form-input" placeholder="Ej. Arquitecto García" required />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="email" className="form-label">Correo Electrónico</label>
-                  <input type="email" id="email" className="form-input" placeholder="tu@email.com" required />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="message" className="form-label">Mensaje</label>
-                  <textarea id="message" className="form-textarea" placeholder="¿En qué podemos ayudarte?" required></textarea>
-                </div>
-                <button type="submit" className="btn-submit">Enviar Mensaje</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <div className="rheto-logo" style={{ fontSize: '2rem', marginBottom: '1rem' }}>
-            RHETO<span style={{ marginTop: '0' }}>ARQUITECTOS</span>
-          </div>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', maxWidth: '500px', margin: '0 auto 2rem' }}>
-            Innovación, diseño y desarrollo estructural para las ciudades del mañana.
-          </p>
-          <div style={{ fontSize: '0.85rem', color: '#888' }}>
-            &copy; {new Date().getFullYear()} Rheto Arquitectos.
-          </div>
+      {/* Mega Footer */}
+      <footer className="mega-footer">
+        <div className="tech-text">ÍNDICE PRINCIPAL</div>
+        <nav className="footer-nav">
+          <a href="#" className="footer-link">Home</a>
+          <a href="#" className="footer-link">Works</a>
+          <a href="#" className="footer-link">Studio</a>
+          <a href="#" className="footer-link">Cronología</a>
+          <a href="#" className="footer-link">News</a>
+          <a href="#" className="footer-link">Contacts</a>
+        </nav>
+        <div>
+          <p className="footer-mission text-sm">Innovación, diseño y desarrollo estructural para las ciudades del mañana. Construyendo desde 2006.</p>
         </div>
       </footer>
+      <div style={{ fontSize: '0.65rem', padding: '1rem 2rem', borderTop: '1px solid var(--border-light)', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+        SYS.INFO: HTTPS://RHETO-ARQUITECTOS.COM // {new Date().getFullYear()} RHETO ARQUITECTOS. ALL RIGHTS RESERVED. [END OF FILE]
+      </div>
     </main>
   );
 }
