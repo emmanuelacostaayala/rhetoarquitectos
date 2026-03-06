@@ -46,7 +46,7 @@ function TimelineProjectRow({ project }: { project: typeof TIMELINE_PROJECTS[0] 
 export default function Home() {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [splitOffset, setSplitOffset] = useState({ x: 0, y: 0 });
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>('light');
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
